@@ -1,0 +1,6 @@
+{
+    "user.email": "firstname.lastname@gmail.com",
+    "user.name": "my_name",
+    "user.signingkey": "S0M3K3Y",
+    "commit.gpgsign": "true"
+}
