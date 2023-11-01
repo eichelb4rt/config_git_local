@@ -25,6 +25,16 @@ Just run `./install.sh`. This should also be run whenever you want to update thi
 
 ## Usage
 
+Create a profile json (e.g. `my_profile.json`) similar to [`example.json`](./example.json) and put it into `~/.git_profiles/`.
+Then you can configure your git locally by executing `config_git_local <profile_name>` in the repository. Example:
+
+```text
+cd my_repo
+config_git_local my_profile
+```
+
+You can also execute `config_git_local -h` for help.
+
 ```text
 usage: config_git_local [-h] [-l] profile_name
 
