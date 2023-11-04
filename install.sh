@@ -2,5 +2,5 @@
 
 mkdir -p ~/.bin
 
-install ./config_git_local ~/.bin/config_git_local
-sudo cp config_git_local-completion.bash /etc/bash_completion.d/config_git_local-completion.bash
+install ./config-git-local ~/.bin/config-git-local
+sudo cp config-git-local-completion.bash /etc/bash_completion.d/config-git-local-completion.bash

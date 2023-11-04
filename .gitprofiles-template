@@ -1,0 +1,28 @@
+[
+    {
+        "name": "github.com",
+        "config": {
+            "user.email": "firstname.lastname@gmail.com",
+            "user.name": "my_name",
+            "user.signingkey": "S0M3K3Y",
+            "commit.gpgsign": "true"
+        }
+    },
+    {
+        "name": "gitlab.com",
+        "config": {
+            "user.email": "firstname.lastname@gmail.com",
+            "user.name": "my_name",
+            "user.signingkey": "S0M3-0TH3R-K3Y",
+            "commit.gpgsign": "true"
+        }
+    },
+    {
+        "name": "other_profile",
+        "config": {
+            "user.email": "other.account@gmail.com",
+            "user.name": "other_name",
+            "commit.gpgsign": "false"
+        }
+    }
+]

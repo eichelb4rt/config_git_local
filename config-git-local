@@ -1,0 +1,79 @@
+#!/bin/python3
+
+import os
+import json
+import argparse
+from collections.abc import Callable
+
+
+PROFILES_FILE = os.path.expandvars("$HOME/.gitprofiles")
+
+if not os.path.isfile(PROFILES_FILE):
+    print(f"Profiles file does not exist, create {PROFILES_FILE} first.")
+    exit(1)
+with open(PROFILES_FILE, 'r') as f:
+    # using a this as global is ok here, cmon, no need to pass it as an argument every time. also we only want to read it once
+    ALL_PROFILES = json.load(f)
+
+
+class SingleAction(argparse.Action):
+    """This class is for actions that can be executed without reading the usual arguments."""
+
+    def __init__(self, option_strings, dest, test_function: Callable[[], None], **kwargs):
+        self._test_function = test_function
+        super().__init__(option_strings, dest, nargs=0, default=argparse.SUPPRESS, **kwargs)
+
+    def __call__(self, parser, namespace, values, option_string, **kwargs):
+        # if testing flag was set, ignore everything else and just test
+        self._test_function()
+        parser.exit()
+
+    @classmethod
+    def build(cls, invoked_function: Callable[[], None]):
+        """Returns action that can be used as an actual argparse action. Basically returns partial function."""
+
+        return lambda option_strings, dest, **kwargs: SingleAction(option_strings, dest, invoked_function, **kwargs)
+
+
+def list_profiles():
+    profile_names = [profile["name"] for profile in ALL_PROFILES]
+    print(os.linesep.join(profile_names))
+
+
+def activate_profile(profile_name: str):
+    if not os.path.isdir(".git"):
+        print("A profile can only be activated at the root of a git repository!")
+        exit(1)
+    profile_names = [profile["name"] for profile in ALL_PROFILES]
+    if profile_name not in profile_names:
+        print(f"Profile not found: {profile_name} (available profiles: {', '.join(profile_names)})")
+        exit(1)
+    profile_config = ALL_PROFILES[profile_names.index(profile_name)]["config"]
+    for key, value in profile_config.items():
+        os.system(f"git config --local {key} '{value}'")
+    print(f"config-git-local: activated local profile {profile_name}")
+
+
+def get_repo_host() -> str:
+    stream = os.popen("git remote get-url origin")
+    url = stream.read()
+    # first strip http stuff, then strip ssh stuff
+    return url.split("//")[-1].split("/")[0].split("?")[0].split("@")[-1].split(":")[0]
+
+
+def auto_activate():
+    profile_name = get_repo_host()
+    activate_profile(profile_name)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("profile_name", help="Name (host) of the profile in ~/.gitprofiles.")
+    parser.add_argument("-l", "--list", action=SingleAction.build(list_profiles), help="Lists available profiles (no other arguments needed).")
+    parser.add_argument("--auto", action=SingleAction.build(auto_activate), help="Automatically activates a profile based on the host of the origin url.")
+    args = parser.parse_args()
+    activate_profile(args.profile_name)
+
+
+if __name__ == "__main__":
+    main()
