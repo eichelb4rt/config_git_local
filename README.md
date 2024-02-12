@@ -26,7 +26,7 @@ Just run `./install.sh`. This should also be run whenever you want to update thi
 ## Usage
 
 Create a profiles json `~/.gitprofiles` similar to [`.gitprofiles-template`](./.gitprofiles-template).
-Then you can configure your git locally by executing `config_git_local <profile_name>` in the repository.
+Then you can configure your git locally by executing `config-git-local <profile_name>` in the repository.
 The `name` field can either be used as a profile name with no further meaning, or it can automatically match a profile to a repo host (more on that in [Automation](#automation)).
 
 ### Automation
