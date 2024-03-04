@@ -76,7 +76,7 @@ Then, in a repository `my_repo`, we could activate the profile `other_profile`:
 ```text
 git clone git@github.com:my_name/my_repo.git
 cd my_repo
-config_git_local other_profile
+config-git-local other_profile
 ```
 
 #### Semi-Automatic
@@ -86,7 +86,7 @@ We could also activate the `github.com` profile in the repo automatically:
 ```text
 git clone git@github.com:my_name/my_repo.git
 cd my_repo
-config_git_local --auto
+config-git-local --auto
 ```
 
 #### Automatic
