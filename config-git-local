@@ -68,10 +68,13 @@ def auto_activate():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("profile_name", help="Name (host) of the profile in ~/.gitprofiles.")
+    parser.add_argument("profile_name", nargs="?", help="Name (host) of the profile in ~/.gitprofiles. Optional. Assumes --auto if no argument is given.")
     parser.add_argument("-l", "--list", action=SingleAction.build(list_profiles), help="Lists available profiles (no other arguments needed).")
     parser.add_argument("--auto", action=SingleAction.build(auto_activate), help="Automatically activates a profile based on the host of the origin url.")
     args = parser.parse_args()
+    if args.profile_name is None:
+        auto_activate()
+        exit(0)
     activate_profile(args.profile_name)
 
 

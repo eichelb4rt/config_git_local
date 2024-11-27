@@ -4,12 +4,7 @@ Small tool to help configure git locally for different repositories on different
 
 ## Requirements
 
-You need to have python3 ([download here](https://www.python.org/downloads/)) installed with the packages in `requirements.txt`.
-To install these packages:
-
-```text
-pip install -r requirements.txt
-```
+You need to have python3 ([download here](https://www.python.org/downloads/)) installed.
 
 You might need to add this to your `~/.profile`:
 
